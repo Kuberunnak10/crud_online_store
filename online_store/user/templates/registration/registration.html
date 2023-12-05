@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center vh-100">
+<form method="post">
+    {% csrf_token %}
+    <div>
+    {{form|crispy}}
+    <div class="mb-3">
+            <button type="submit" class="btn btn-primary btn-lg">Регистрация</button>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
