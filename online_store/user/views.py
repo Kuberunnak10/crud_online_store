@@ -27,3 +27,7 @@ def home_page(request):
 @login_required(login_url='/user/login')
 def profile(request):
     return render(request, 'user/profile.html')
+
+
+def contacts_page(request):
+    return render(request, 'home/contacts.html')
