@@ -122,7 +122,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
-!.env.example
+!online_store/.env.example
 env/
 venv/
 ENV/

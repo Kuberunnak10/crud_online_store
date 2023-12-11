@@ -6,8 +6,6 @@ ENV PYTHONUNBUFFERED=1
 
 RUN pip install --upgrade pip
 
-COPY online_store .
+COPY . .
 
 RUN pip install -r requirements.txt
-
-CMD 'python manage.py runserver'

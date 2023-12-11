@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: os_postgres
+    volumes:
+      - ~/.pg/pg_data/shop:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+  online_store:
+    image: store:latest
+    container_name: store
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: python manage.py runserver
