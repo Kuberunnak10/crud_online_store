@@ -13,6 +13,9 @@ services:
   online_store:
     image: store:latest
     container_name: store
+    command: gunicorn online_store.wsgi:application -b 0.0.0.0:8000
+    ports:
+      - "8000:8000"
     build:
       dockerfile: Dockerfile
       context: .
@@ -20,4 +23,3 @@ services:
       - db
     env_file:
       - .env
-    command: python manage.py runserver
