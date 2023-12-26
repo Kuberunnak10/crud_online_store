@@ -10,7 +10,7 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=True)
             login(request, user)
             return redirect('/')
     else:

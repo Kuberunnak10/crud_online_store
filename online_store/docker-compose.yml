@@ -3,23 +3,38 @@ version: "3.9"
 services:
   db:
     image: postgres:15
-    container_name: os_postgres
+    container_name: db
     volumes:
-      - ~/.pg/pg_data/shop:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
   online_store:
     image: store:latest
     container_name: store
-    command: gunicorn online_store.wsgi:application -b 0.0.0.0:8000
-    ports:
-      - "8000:8000"
     build:
       dockerfile: Dockerfile
       context: .
+    ports:
+      - '8000:8000'
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - .env
+    entrypoint:
+      - /app/entrypoint.sh
+
+volumes:
+  postgres:
+    name: db
