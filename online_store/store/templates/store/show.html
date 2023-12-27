@@ -15,7 +15,7 @@
         <th>Цвет</th>
         <th>Цена</th>
         <th>Тип одежды</th>
-        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
         <th>Edit</th>
         <th>Delete</th>
         {% endif %}
@@ -28,7 +28,7 @@
         <td>{{ w.color }}</td>
         <td>{{ w.price }}</td>
         <td>{{ w.category_id }}</td>
-        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
         <td><a href="/crud/edit/{{ w.id }}" class="btn btn-primary">Edit</a></td>
         <td><a href="/crud/delete/{{ w.id }}" class="btn btn-danger">Delete</a></td>
         {% endif %}
@@ -39,7 +39,7 @@
       </div>
   </div>
   <br>
-    {% if user.is_authenticated %}
+    {% if user.is_superuser %}
   <a href="{% url 'create_wear' %}" class="btn btn-primary">Добавить новый товар</a>
     {% endif %}
 
